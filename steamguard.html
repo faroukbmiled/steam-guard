@@ -149,7 +149,7 @@
         const inputContainer = document.getElementById('inputContainer');
         const advancedLink = document.getElementById('advancedLink');
 
-        const savedSecretKey = localStorage.getItem('steamSharedKey');
+        const savedSecretKey = localStorage.getItem('c45a202e34be9160a4bf268328f5fea7');
 
         if (savedSecretKey) {
             inputContainer.style.display = 'none';
@@ -163,7 +163,7 @@
         saveButton.addEventListener('click', () => {
             const secretKey = secretKeyInput.value;
             if (secretKey) {
-                localStorage.setItem('steamSharedKey', secretKey);
+                window.saveSecretKey(secretKey);
                 alert('Secret Key saved successfully!');
                 location.reload();
             } else {
@@ -198,7 +198,7 @@
         });
 
         resetButton.addEventListener('click', () => {
-            localStorage.removeItem('steamSharedKey');
+            localStorage.removeItem('c45a202e34be9160a4bf268328f5fea7');
             location.reload();
         });
     </script>
