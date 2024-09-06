@@ -118,6 +118,28 @@
             display: none;
             margin-top: 10px;
         }
+
+        .auto-generate-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-top: 10px;
+        }
+
+        .auto-generate-label {
+            margin-right: 10px;
+            font-size: 1em;
+            color: #c5c6c7;
+        }
+
+        .auto-generate-toggle {
+            margin-left: -85px;
+            width: 20px;
+            height: 20px;
+            position: relative;
+            top: 5px;
+            accent-color: #007bff;
+        }
     </style>
 </head>
 
@@ -129,8 +151,12 @@
             <button id="saveButton">Save Secret Key</button>
         </div>
         <span class="advanced-link" id="advancedLink"></span>
-        <div id="resetButtonContainer">
-            <button id="resetButton">Reset Key</button>
+        <div id="advancedControls">
+            <div class="reset-toggle-container">
+                <label for="autoGenerateToggle" class="auto-generate-label">Auto Generate:</label>
+                <input type="checkbox" id="autoGenerateToggle" class="auto-generate-toggle">
+                <button id="resetButton">Reset Key</button>
+            </div>
         </div>
         <div id="codeDisplay">Click "Generate Code" to get started</div>
         <button id="generateButton">Generate Code</button>
@@ -148,14 +174,17 @@
         const resetButtonContainer = document.getElementById('resetButtonContainer');
         const inputContainer = document.getElementById('inputContainer');
         const advancedLink = document.getElementById('advancedLink');
+        const autoGenerateToggle = document.getElementById('autoGenerateToggle');
+        const advancedControls = document.getElementById('advancedControls');
 
         const savedSecretKey = localStorage.getItem('c45a202e34be9160a4bf268328f5fea7');
+        let autoGenerateInterval = null;
 
         if (savedSecretKey) {
             inputContainer.style.display = 'none';
             advancedLink.textContent = 'Show Advanced';
             advancedLink.style.display = 'block';
-            resetButtonContainer.style.display = 'none'
+            advancedControls.style.display = 'none';
         } else {
             advancedLink.style.display = 'none';
         }
@@ -188,11 +217,11 @@
         });
 
         advancedLink.addEventListener('click', () => {
-            if (resetButtonContainer.style.display === 'none') {
-                resetButtonContainer.style.display = 'block';
+            if (advancedControls.style.display === 'none') {
+                advancedControls.style.display = 'block';
                 advancedLink.textContent = 'Hide Advanced';
             } else {
-                resetButtonContainer.style.display = 'none';
+                advancedControls.style.display = 'none';
                 advancedLink.textContent = 'Show Advanced';
             }
         });
@@ -201,6 +230,26 @@
             localStorage.removeItem('c45a202e34be9160a4bf268328f5fea7');
             location.reload();
         });
+
+        autoGenerateToggle.addEventListener('change', () => {
+            if (autoGenerateToggle.checked) {
+                localStorage.setItem('autoGenerateEnabled', 'true');
+                autoGenerateInterval = setInterval(() => {
+                    generateButton.click();
+                }, 1000);
+            } else {
+                localStorage.removeItem('autoGenerateEnabled');
+                clearInterval(autoGenerateInterval);
+            }
+        });
+
+        const autoGenerateEnabled = localStorage.getItem('autoGenerateEnabled');
+        if (autoGenerateEnabled === 'true') {
+            autoGenerateToggle.checked = true;
+            autoGenerateInterval = setInterval(() => {
+                generateButton.click();
+            }, 1000);
+        }
     </script>
 </body>
 
