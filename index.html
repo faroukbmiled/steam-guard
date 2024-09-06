@@ -180,6 +180,12 @@
         const savedSecretKey = localStorage.getItem('c45a202e34be9160a4bf268328f5fea7');
         let autoGenerateInterval = null;
 
+        if (!savedSecretKey) {
+            localStorage.removeItem('autoGenerateEnabled');
+            autoGenerateToggle.checked = false;
+            autoGenerateToggle.disabled = true;
+        }
+
         if (savedSecretKey) {
             inputContainer.style.display = 'none';
             advancedLink.textContent = 'Show Advanced';
@@ -228,11 +234,14 @@
 
         resetButton.addEventListener('click', () => {
             localStorage.removeItem('c45a202e34be9160a4bf268328f5fea7');
+            localStorage.removeItem('autoGenerateEnabled');
+            autoGenerateToggle.checked = false;
+            autoGenerateToggle.disabled = true;
             location.reload();
         });
 
         autoGenerateToggle.addEventListener('change', () => {
-            if (autoGenerateToggle.checked) {
+            if (autoGenerateToggle.checked && savedSecretKey) {
                 localStorage.setItem('autoGenerateEnabled', 'true');
                 autoGenerateInterval = setInterval(() => {
                     generateButton.click();
@@ -244,13 +253,14 @@
         });
 
         const autoGenerateEnabled = localStorage.getItem('autoGenerateEnabled');
-        if (autoGenerateEnabled === 'true') {
+        if (autoGenerateEnabled === 'true' && savedSecretKey) {
             autoGenerateToggle.checked = true;
             autoGenerateInterval = setInterval(() => {
                 generateButton.click();
             }, 1000);
         }
     </script>
+
 </body>
 
 </html>
