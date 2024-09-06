@@ -95,6 +95,8 @@
             padding: 5px 10px;
             font-size: 0.8em;
             margin-top: 10px;
+            display: flex;
+            flex-direction: column;
         }
 
         #resetButton:hover {
@@ -126,19 +128,31 @@
             margin-top: 10px;
         }
 
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-top: 10px;
+        }
+
         .auto-generate-label {
-            margin-right: 10px;
             font-size: 1em;
             color: #c5c6c7;
+            margin-right: 10px;
         }
 
         .auto-generate-toggle {
-            margin-left: -85px;
+            position: relative;
             width: 20px;
             height: 20px;
-            position: relative;
-            top: 5px;
+            right: 40px;
             accent-color: #007bff;
+        }
+
+        #advancedControls {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
         }
     </style>
 </head>
@@ -152,11 +166,15 @@
         </div>
         <span class="advanced-link" id="advancedLink"></span>
         <div id="advancedControls">
-            <div class="reset-toggle-container">
+            <div class="toggle-container">
                 <label for="autoGenerateToggle" class="auto-generate-label">Auto Generate:</label>
                 <input type="checkbox" id="autoGenerateToggle" class="auto-generate-toggle">
+            </div>
+            <div class="toggle-container">
+                <label class="auto-generate-label">Reset Shared Key:</label>
                 <button id="resetButton">Reset Key</button>
             </div>
+
         </div>
         <div id="codeDisplay">Click "Generate Code" to get started</div>
         <button id="generateButton">Generate Code</button>
