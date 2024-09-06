@@ -275,6 +275,7 @@
         autoGenerateToggle.addEventListener('change', () => {
             if (autoGenerateToggle.checked && savedSecretKey) {
                 localStorage.setItem('autoGenerateEnabled', 'true');
+                generateButton.click();
                 autoGenerateInterval = setInterval(() => {
                     generateButton.click();
                 }, 1000);
@@ -287,6 +288,7 @@
         const autoGenerateEnabled = localStorage.getItem('autoGenerateEnabled');
         if (autoGenerateEnabled === 'true' && savedSecretKey) {
             autoGenerateToggle.checked = true;
+            generateButton.click();
             autoGenerateInterval = setInterval(() => {
                 generateButton.click();
             }, 1000);
