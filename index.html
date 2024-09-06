@@ -142,10 +142,10 @@
         }
 
         .auto-generate-toggle {
+            margin-left: 0;
             position: relative;
             width: 20px;
             height: 20px;
-            right: 40px;
             accent-color: #007bff;
         }
 
@@ -154,6 +154,19 @@
             flex-direction: row;
             justify-content: space-between;
         }
+
+        @media (min-width: 768px) {
+            .auto-generate-toggle {
+                right: 30px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .auto-generate-toggle {
+                right: 0px;
+            }
+        }
+
     </style>
 </head>
 
